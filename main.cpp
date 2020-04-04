@@ -23,6 +23,11 @@ int main(int argc, char** argv) {
         preview::regeneration(cap);
     } else if(command == 1) {
         preview::output_movie(cap);
+    } else if(command == 2){
+        std::string text;
+        std::cout << "表示したいテキストを入力してください: ";
+        std::cin >> text;
+        preview::on_text_output(cap, text);
     } else {
         std::cout << "そのコマンドは実装されていません！" << std::endl;
     }
