@@ -21,6 +21,10 @@ int main(int argc, char** argv) {
 
     if(command == 0) {
         preview::regeneration(cap);
+    } else if(command == 1) {
+        preview::output_movie(cap);
+    } else {
+        std::cout << "そのコマンドは実装されていません！" << std::endl;
     }
     return 0;
 }

@@ -25,7 +25,24 @@ namespace preview {
         }
     }
 
-    void output_movie() {
-
+    void output_movie(cv::VideoCapture cap) {
+        int width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+        int height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+        auto size = cv::Size(width, height);
+        double fps = cap.get(cv::CAP_PROP_FPS);
+        int fourcc = cv::VideoWriter::fourcc('m','p','4','v');
+        cv::VideoWriter vw;
+        vw.open("output.mp4", fourcc, fps, size);
+        cv::Mat frame, dst;
+        while(true) {
+            cap >> frame;
+            if(frame.empty() == true) {
+                break;
+            }
+            cv::imshow("outputting...", frame);
+            cv::flip(frame, dst, 1);
+            vw << dst;
+            cv::waitKey(1);
+        }
     }
 }
