@@ -61,12 +61,13 @@ namespace preview {
             if(frame.empty() == true) {
                 break;
             }
-            cv::imshow("outputting...", frame);
+            const double frame_position = cap.get(cv::CAP_PROP_POS_FRAMES);
+            const double all_frames = cap.get(cv::CAP_PROP_FRAME_COUNT);
+            std::cout << "Progress: " << frame_position / all_frames * 100 << "%" << std::endl;
             cv::Point pnt = cv::Point(width / 2, height / 2);
             cv::putText(frame, text, pnt, cv::FONT_HERSHEY_PLAIN,
                     5.0, cv::Scalar(255,0,0), 2, cv::LINE_AA);
             vw << frame;
-            cv::waitKey(1);
         }
     }
 }
