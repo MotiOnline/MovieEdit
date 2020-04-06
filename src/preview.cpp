@@ -2,6 +2,20 @@
 #include <string>
 
 namespace preview {
+
+    // フロントエンドから扱う"座標"の構造体
+    // TODO: 動画のwidth, height が丁度半分の地点を (0,0) として扱いたい
+    struct position {
+        double _x;
+        double _y;
+    };
+
+    cv::Point posToPoint(position pos, cv::VideoCapture cap) {
+        const double width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+        const double height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+        return cv::Point(pos._x + width / 2, pos._y + height / 2);
+    }
+
     void regeneration(cv::VideoCapture cap) {
         cv::Mat frame;
 
@@ -58,9 +72,7 @@ namespace preview {
         }
     }
 
-    void on_text_output(cv::VideoCapture cap, std::string text) {
-        const int width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
-        const int height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+    void on_text_output(cv::VideoCapture cap, std::string text, position pos) {
         cv::VideoWriter vw = get_video_writer(cap);
         cv::Mat frame;
         while(true) {
@@ -69,7 +81,7 @@ namespace preview {
                 break;
             }
             output_progress(cap);
-            cv::Point pnt = cv::Point(width / 2, height / 2);
+            cv::Point pnt = posToPoint(pos, cap);
             cv::putText(frame, text, pnt, cv::FONT_HERSHEY_PLAIN,
                     5.0, cv::Scalar(255,0,0), 2, cv::LINE_AA);
             vw << frame;

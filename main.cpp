@@ -25,9 +25,14 @@ int main(int argc, char** argv) {
         preview::output_movie(cap);
     } else if(command == 2){
         std::string text;
+        preview::position pos;
         std::cout << "表示したいテキストを入力してください: ";
         std::cin >> text;
-        preview::on_text_output(cap, text);
+        std::cout << std::endl << "設置したいx座標を入力してください: ";
+        std::cin >> pos._x;
+        std::cout << std::endl << "設置したいy座標を入力してください: ";
+        std::cin >> pos._y;
+        preview::on_text_output(cap, text, pos);
     } else {
         std::cout << "そのコマンドは実装されていません！" << std::endl;
     }
