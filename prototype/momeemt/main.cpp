@@ -1,40 +1,36 @@
 #include <string>
+#include <fstream>
 #include <opencv2/opencv.hpp>
 #include "src/preview.cpp"
-
-/*
- * S >> 映像リンク
- * N >> N個の編集タスクを受け取る
- * T1,T2, ... , TN >> タスク
- *
- * text >> テキスト表示
- * shape >> 図形表示
- * image >> 画像表示
- */
+#include "src/picojson.h"
 
 int main(int argc, char* argv[]) {
     cv::VideoCapture cap;
 
-    std::string video_path;
-    std::cin >> video_path;
-    cap.open(video_path);
+    //std::cout << "Input json file which is about editing movie tasks." << std::endl;
+    std::ifstream fs;
+    fs.open("tasks.json", std::ios::binary);
+    // assert(fs);
 
-    if(cap.isOpened() == false) {
-        std::cout << "ファイルが破損している可能性があります" << std::endl;
-        return -1;
-    }
+    //std::cout << "Input a path of the target video." << std::endl;
+    //std::string video_path;
+    //std::cin >> video_path;
+    //cap.open(video_path);
 
-    int tasks_count;
-    std::cin >> tasks_count;
+//    if(cap.isOpened() == false) {
+//        std::cout << "This file is broken." << std::endl;
+//        return -1;
+//    }
 
-    for(int i = 0; i < tasks_count; ++i) {
-        std::string task_type;
-        std::cin >> task_type;
+    picojson::value val;
+    fs >> val;
+    fs.close();
 
-        if(task_type == "text") {
+    val.get<picojson::object>()
+            ["info"].get<picojson::object>()
+            ["tasks_count"].get<double>();
 
-        }
-    }
+    std::cout << val << std::endl;
 
     return 0;
 }
