@@ -13,4 +13,6 @@
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.3.0.20200405" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
 </Project>
