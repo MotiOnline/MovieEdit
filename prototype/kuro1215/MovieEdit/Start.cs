@@ -1,25 +1,45 @@
-﻿using MovieEdit.Timeline;
-using OpenCvSharp;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System;
+using MovieEdit.IO;
+using static MovieEdit.MESystem;
 
 namespace MovieEdit
 {
-    class Start
+    public class Start
     {
+        private static FileWatcher watcher;
+
         public static void Main(string[] args)
         {
-            foreach (var arg in args)
+            Starting(args);
+            CUI.CUIInput();
+            Ending();
+        }
+
+        private static void Starting(string[] args)
+        {
+            for (int i = 0;i < args.Length;i++)
             {
-                switch (arg)
+                var arg = args[i];
+                if(arg == "--debug")
                 {
-                    case "--outinfo":
-                        System.ConsoleInfo = true;
-                        break;
+                    ConsoleInfo = true;
+                    Log(LogType.Warn, "Debugging Mode Start...");
+                    Program.DebugStart();
                 }
+                else if (arg == "--outinfo") ConsoleInfo = true;
             }
+
+            new Setting();
+            Debugging.CreateSettingFile.ExtentionData();
+            watcher = new FileWatcher(JsonWatchPath);
+            watcher.StartWatching();
+        }
+
+        private static void Ending(int code = 0)
+        {
+            watcher.EndWatching();
+            Log("プログラム終了");
+            Environment.Exit(code);
         }
     }
 }
