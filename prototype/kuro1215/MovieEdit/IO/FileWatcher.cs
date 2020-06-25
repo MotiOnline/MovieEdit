@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using MovieEdit.TL;
 using static MovieEdit.MESystem;
+using static System.StringComparison;
 
 namespace MovieEdit.IO
 {
@@ -14,6 +15,7 @@ namespace MovieEdit.IO
 
         public FileWatcher(string path, string filter = "")
         {
+            if (!Directory.Exists(path)) throw new DirectoryNotFoundException();
             WatchingPath = path;
             watcher = new FileSystemWatcher
             {
@@ -31,58 +33,52 @@ namespace MovieEdit.IO
 
         public void StartWatching()
         {
-            if (IsWatcher())
-            {
-                watcher.EnableRaisingEvents = true;
-                Log(LogType.Warn, $"フォルダ\"{ WatchingPath }\"のファイル監視を開始");
-            }
+            if (!IsWatcher()) return;
+            watcher.EnableRaisingEvents = true;
+            Log.Warn($"フォルダ\"{ WatchingPath }\"のファイル監視を開始", "FileWatcher");
         }
-
         public void EndWatching(bool dispose = true)
         {
-            if (IsWatcher())
-            {
-                watcher.EnableRaisingEvents = false;
-                Log(LogType.Warn, $"フォルダ\"{ WatchingPath }\"のファイル監視を終了");
-                if (dispose) Dispose();
-            }
+            if (!IsWatcher()) return;
+            watcher.EnableRaisingEvents = false;
+            Log.Warn($"フォルダ\"{ WatchingPath }\"のファイル監視を終了", "FileWatcher");
+            if (dispose) Dispose();
         }
-
         public string WaitResult()
         {
-            if (!watcher.EnableRaisingEvents)
+            if (!IsWatcher() || watcher.EnableRaisingEvents) return null;
+            var result = watcher.WaitForChanged(WatcherChangeTypes.Created);
+            if (result.TimedOut)
             {
-                var result = watcher.WaitForChanged(WatcherChangeTypes.Created);
-                if (result.TimedOut)
-                {
-                    Log(LogType.Error, "ファイル監視がタイムアウトしました");
-                    return null;
-                }
-                else return result.Name;
-            }
-            else
-            {
+                Log.Error("ファイル監視がタイムアウトしました");
                 return null;
             }
+            else return result.Name;
         }
-
         private bool IsWatcher()
         {
-            if (watcher == null)
-            {
-                Log(LogType.Error, "指定されたFileWatcherは解放済みのため、再定義して使用してください");
-                return false;
-            }
-            else return true;
+            bool b = watcher == null;
+            if (b) Log.Error("指定されたFileWatcherは解放済みのため、再定義して使用してください");
+            return b;
         }
 
         public void Dispose()
         {
-            if (IsWatcher())
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsWatcher()) return;
+            if (disposing)
             {
                 watcher.Dispose();
                 watcher = null;
             }
+        }
+        ~FileWatcher()
+        {
+            Dispose(false);
         }
 
         public bool AddEvent(string trigger, Action<string> action)
@@ -92,31 +88,35 @@ namespace MovieEdit.IO
             else return false;
             return true;
         }
-
         private void CreatedEvent(object source, FileSystemEventArgs e)
         {
             string path = e.FullPath;
-            string current = path.Replace($@"{JsonWatchPath}\", "");
+            string current = path.Replace($@"{JsonWatchPath}\", "", CurrentCulture);
             if(CreatedEvents.TryGetValue(current, out var evt)) evt(path);
         }
         private void CommandEvent(string path)
         {
-            string cmd = new StreamReader(path).ReadToEnd();
+            var reader = new StreamReader(path);
+            string cmd = reader.ReadToEnd();
             Command.RunCommand(cmd);
+            reader.Dispose();
+            
         }
         private void MsgBoxEvent(string path)
         {
             if (FileName.IsResultFile(path))
             {
-                Dialog.Result = int.Parse(Text.ReadFile(path)) == 0;
+                Dialog.Result = int.Parse(EditText.ReadFile(path), Language.SystemLang) == 0;
                 Dialog.Waiting = false;
             }
         }
         private void TaskEvent(string path)
         {
-            string json = new StreamReader(path).ReadToEnd();
-            var tl = Json.ReadJsonFile<TLInfo<TimelineObject>>(json);
-            OpeningProject.Timeline.AddObject(tl.Layer, tl.Frame, tl.Object);
+            var reader = new StreamReader(path);
+            string json = reader.ReadToEnd();
+            var tl = EditJson.ReadJsonFile<TLInfo<TimelineObject>>(json);
+            OpeningProject.Timeline.AddObject(tl.Layer, tl.Frame, tl.TLObject);
+            reader.Dispose();
         }
     }
 }
