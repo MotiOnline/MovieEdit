@@ -1,6 +1,8 @@
 ﻿using MovieEdit.TL;
 using OpenCvSharp;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MovieEdit
 {
@@ -35,7 +37,14 @@ namespace MovieEdit
 
         public void Save()
         {
+            SaveNewFile(ProjectPath, FileMode.Open);
+        }
 
+        public void SaveNewFile(string file, FileMode mode = FileMode.CreateNew)
+        {
+            using var stream = new FileStream(file, mode, FileAccess.Write);
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(stream, this);
         }
     }
 }
