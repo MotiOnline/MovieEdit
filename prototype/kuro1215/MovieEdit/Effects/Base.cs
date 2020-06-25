@@ -10,7 +10,7 @@
         public string Name { get; }
         public string Explain { get; }
         public BaseType Type { get; }
-        protected private object[] Values { get; }
+        private protected object[] Values { get; }
 
         protected private Base(string name, string explain, object[] value, BaseType type)
         {
