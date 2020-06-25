@@ -14,13 +14,13 @@ namespace MovieEdit.IO
         {
             Waiting = true;
             var dialog = new DialogInfo(type, title, msg);
-            Json.WriteJsonFile("MsgBox", dialog);
+            EditJson.WriteJsonFile("MsgBox", dialog);
             while (Waiting) ;
             return Result;
         }
     }
 
-    public struct DialogInfo
+    public struct DialogInfo : IEquatable<DialogInfo>
     {
         public enum DialogType
         {
@@ -38,5 +38,17 @@ namespace MovieEdit.IO
             Title = title;
             Message = msg;
         }
+
+        public static bool operator ==(DialogInfo left, DialogInfo right)
+            => left.Equals(right);
+        public static bool operator !=(DialogInfo left, DialogInfo right)
+            => !(left == right);
+
+        public override bool Equals(object obj)
+            => obj is DialogInfo di ? Equals(di) : false;
+        public bool Equals(DialogInfo other)
+            => base.Equals(other);
+        public override int GetHashCode()
+            => base.GetHashCode();
     }
 }
