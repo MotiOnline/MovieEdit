@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MovieEdit.Store
 {
-    public class Store
+    public class OnlineStore
     {
 
     }
