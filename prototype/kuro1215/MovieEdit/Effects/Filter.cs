@@ -1,4 +1,5 @@
 ﻿using OpenCvSharp;
+using System;
 using static MovieEdit.Effects.Blur;
 
 namespace MovieEdit.Effects
@@ -6,30 +7,29 @@ namespace MovieEdit.Effects
     public static class Filter
     {
         public static Blur BLUR(BlurType type) => new Blur(type);
-        public static Mosaic MOSAIC(double ratio_x, double ratio_y) => new Mosaic(ratio_x, ratio_y);
+        public static Mosaic MOSAIC(double rx, double ry) => new Mosaic(rx, ry);
         public static Mosaic MOSAIC(Size size) => new Mosaic(size);
     }
 
     public abstract class FilterBase : Base
     {
-        protected private Mat res = new Mat();
-
         protected private FilterBase(string name, string explain, params object[] value)
             : base(name, explain, value, BaseType.Filter) { }
 
+        public abstract Mat Filtering(Mat source, Point point, Size size);
+
         public Mat Filtering(Mat source)
         {
+            if (source == null) throw new ArgumentNullException(nameof(source));
             return Filtering(source, new Point(0, 0), source.Size());
         }
-
-        public abstract Mat Filtering(Mat source, Point point, Size size);
     }
     public abstract class FilterBase<A> : FilterBase
     {
         protected private A Value1
         {
-            get { return (A)Values[0]; }
-            set { Values[0] = value; }
+            get => (A)Values[0];
+            set => Values[0] = value;
         }
 
         public FilterBase(string name, string explain, A value1)
@@ -37,14 +37,15 @@ namespace MovieEdit.Effects
     }
     public abstract class FilterBase<A, B> : FilterBase
     {
-        protected private A Value1 {
-            get { return (A)Values[0]; }
-            set { Values[0] = value; }
+        protected private A Value1
+        {
+            get => (A)Values[0];
+            set => Values[0] = value;
         }
         protected private B Value2
         {
-            get { return (B)Values[1]; }
-            set { Values[1] = value; }
+            get => (B)Values[1];
+            set => Values[1] = value;
         }
 
         public FilterBase(string name, string explain, A value1, B value2)
@@ -54,18 +55,18 @@ namespace MovieEdit.Effects
     {
         protected private A Value1
         {
-            get { return (A)Values[0]; }
-            set { Values[0] = value; }
+            get => (A)Values[0];
+            set => Values[0] = value;
         }
         protected private B Value2
         {
-            get { return (B)Values[1]; }
-            set { Values[1] = value; }
+            get => (B)Values[1];
+            set => Values[1] = value;
         }
         protected private C Value3
         {
-            get { return (C)Values[2]; }
-            set { Values[2] = value; }
+            get => (C)Values[2];
+            set => Values[2] = value;
         }
 
         public FilterBase(string name, string explain, A value1, B value2, C value3)
@@ -83,7 +84,8 @@ namespace MovieEdit.Effects
 
         public override Mat Filtering(Mat source, Point point, Size size)
         {
-            var mat = Effect.RECT(point, size).Processing(source);
+            Mat res = new Mat();
+            var mat = PrintEffect.RECT(point, size).Processing(source);
             switch (Value1)
             {
                 case BlurType.Smooth3x3:
@@ -105,7 +107,6 @@ namespace MovieEdit.Effects
                     Cv2.MedianBlur(mat, res, 5);
                     break;
             }
-
             return res;
         }
     }
@@ -118,7 +119,9 @@ namespace MovieEdit.Effects
 
         public override Mat Filtering(Mat source, Point point, Size size)
         {
-            if(Value3 != null)
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            Mat res = new Mat();
+            if (Value3 != null)
             {
                 Size pixel = (Size)Value3;
                 Value1 = (double)pixel.Width / size.Width;
