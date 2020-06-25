@@ -1,17 +1,20 @@
 ﻿using System;
+using System.ComponentModel;
+using System.IO;
 using MovieEdit.IO;
 using static MovieEdit.MESystem;
 
 namespace MovieEdit
 {
-    public class Start
+    public static class Start
     {
         private static FileWatcher watcher;
 
         public static void Main(string[] args)
         {
+            if (args == null) args = Array.Empty<string>();
             Starting(args);
-            CUI.CUIInput();
+            CUI.Input();
             Ending();
         }
 
@@ -23,14 +26,16 @@ namespace MovieEdit
                 if(arg == "--debug")
                 {
                     ConsoleInfo = true;
-                    Log(LogType.Warn, "Debugging Mode Start...");
-                    Program.DebugStart();
+                    Log.Warn("Debugging Mode Start...");
+                    //Program.DebugStart();
+                    //Debugging.CreateSettingFile.ExtentionData();
                 }
                 else if (arg == "--outinfo") ConsoleInfo = true;
             }
 
-            new Setting();
-            Debugging.CreateSettingFile.ExtentionData();
+            //Language.Load();
+
+            //Setting.InitLoad();
             watcher = new FileWatcher(JsonWatchPath);
             watcher.StartWatching();
         }
@@ -38,7 +43,7 @@ namespace MovieEdit
         private static void Ending(int code = 0)
         {
             watcher.EndWatching();
-            Log("プログラム終了");
+            Log.Info("プログラム終了");
             Environment.Exit(code);
         }
     }
