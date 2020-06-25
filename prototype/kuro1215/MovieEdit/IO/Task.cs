@@ -2,7 +2,7 @@
 
 namespace MovieEdit
 {
-    public class Task
+    public class EditTask
     {
         public TimelineObject Type { get; set; }
 
@@ -11,7 +11,7 @@ namespace MovieEdit
         public PositionInfo Position { get; }
         public string content { get; set; }
 
-        public Task(TimelineObject type, string cont)
+        public EditTask(TimelineObject type, string cont)
         {
             Type = type;
             content = cont;
