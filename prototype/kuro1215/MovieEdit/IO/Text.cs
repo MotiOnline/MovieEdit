@@ -2,16 +2,17 @@
 
 namespace MovieEdit.IO
 {
-    public class Text
+    public static class EditText
     {
         public static string ReadFile(string path)
         {
-            return new StreamReader(path).ReadToEnd();
+            using var reader = new StreamReader(path);
+            return reader.ReadToEnd();
         }
-
         public static void WriteFile(string path, string content)
         {
-            new StreamWriter(path).Write(content);
+            using var writer = new StreamWriter(path);
+            writer.Write(content);
         }
     }
 }
