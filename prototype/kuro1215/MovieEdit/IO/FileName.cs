@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using static System.StringComparison;
 
 namespace MovieEdit.IO
 {
@@ -13,28 +14,20 @@ namespace MovieEdit.IO
             string file = $@"{MESystem.JsonWatchPath}\{type}\{type}{date:HHmmssf}{s}.{extention}";
             return (date, file);
         }
-
         public static string GetDate(string path)
         {
-            if (!path.Contains(MESystem.JsonWatchPath)) return null;
-            string name = Path.GetFileNameWithoutExtension(path).Replace("_result", "");
+            if (path == null || !path.Contains(MESystem.JsonWatchPath, CurrentCulture)) return null;
+            string name = Path.GetFileNameWithoutExtension(path).Replace("_result", "", CurrentCulture);
             return name.Substring(name.Length - 8);
         }
-
         public static string GetType(string path)
         {
-            if (!path.Contains(MESystem.JsonWatchPath)) return null;
-            return Path.GetDirectoryName(path).Replace($@"{MESystem.JsonWatchPath}\", "");
+            if (path == null || !path.Contains(MESystem.JsonWatchPath, CurrentCulture)) return null;
+            return Path.GetDirectoryName(path).Replace($@"{MESystem.JsonWatchPath}\", "", CurrentCulture);
         }
-
         public static bool IsExsitType(string type)
-        {
-            return Directory.Exists($@"{MESystem.JsonWatchPath}\{type}");
-        }
-
+            => Directory.Exists($@"{MESystem.JsonWatchPath}\{type}");
         public static bool IsResultFile(string path)
-        {
-            return path.Contains("_result");
-        }
+            => Path.GetFileNameWithoutExtension(path).EndsWith("_result", CurrentCulture);
     }
 }
