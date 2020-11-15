@@ -448,7 +448,7 @@ namespace MovieEdit.TL
 
         public override Mat GetMat(uint frame)
         {
-            var size = OpeningProject.OutputSize;
+            var size = Project.OpeningProject.OutputSize;
             var bitmap = new Bitmap(size.Width, size.Height);
             Graphics g = Graphics.FromImage(bitmap);
             g.DrawString(Text, Font, Color, (float)Position.X, (float)Position.Y);

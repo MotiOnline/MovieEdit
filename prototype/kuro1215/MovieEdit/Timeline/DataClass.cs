@@ -125,7 +125,7 @@ namespace MovieEdit.TL
         public Color(string code)
         {
             if (code == null) throw new ArgumentNullException(nameof(code));
-            if (code[0] == '#') code = code.Substring(1);
+            if (code[0] == '#') code = code[1..];
             Red = (byte)int.Parse(code.Substring(0, 2), NumberStyles.HexNumber, SystemLang);
             Green = (byte)int.Parse(code.Substring(3, 2), NumberStyles.HexNumber, SystemLang);
             Blue = (byte)int.Parse(code.Substring(5, 2), NumberStyles.HexNumber, SystemLang);

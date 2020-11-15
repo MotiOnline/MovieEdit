@@ -115,7 +115,7 @@ namespace MovieEdit.IO
             var reader = new StreamReader(path);
             string json = reader.ReadToEnd();
             var tl = EditJson.ReadJsonFile<TLInfo<TimelineObject>>(json);
-            OpeningProject.Timeline.AddObject(tl.Layer, tl.Frame, tl.TLObject);
+            Project.OpeningProject.Timeline.AddObject(tl.Layer, tl.Frame, tl.TLObject);
             reader.Dispose();
         }
     }

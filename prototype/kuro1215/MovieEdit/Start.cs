@@ -27,14 +27,18 @@ namespace MovieEdit
                 {
                     ConsoleInfo = true;
                     Log.Warn("Debugging Mode Start...");
-                    //Program.DebugStart();
-                    //Debugging.CreateSettingFile.ExtentionData();
+#if DEBUG
+                    Program.DebugStart();
+                    Debugging.CreateSettingFile.ExtentionData();
+                    Project.Create("./", "debug", new OpenCvSharp.Size(1920, 1080));
+#endif
                 }
                 else if (arg == "--outinfo") ConsoleInfo = true;
             }
 
             //Language.Load();
 
+            Console.WriteLine(AppLocation);
             //Setting.InitLoad();
             watcher = new FileWatcher(JsonWatchPath);
             watcher.StartWatching();

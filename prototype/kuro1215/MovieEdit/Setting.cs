@@ -11,8 +11,8 @@ namespace MovieEdit
     {
         public static void InitLoad()
         {
-            Path.GetFullPath(@".\CarResources.resx");
-            string path = Path.GetFullPath(@".\");
+            Path.GetFullPath(@"./CarResources.resx");
+            string path = Path.GetFullPath(@"./");
 
             Language.Load(path);
 

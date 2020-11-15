@@ -1,0 +1,15 @@
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\bin\Debug\WPFShowWindow.exe.config
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\bin\Debug\WPFShowWindow.exe
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\bin\Debug\WPFShowWindow.pdb
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow.csprojAssemblyReference.cache
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\MainWindow.g.cs
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\App.g.cs
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow_MarkupCompile.cache
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow_MarkupCompile.lref
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\MainWindow.baml
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow.g.resources
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow.Properties.Resources.resources
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow.csproj.GenerateResource.cache
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow.csproj.CoreCompileInputs.cache
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow.exe
+D:\Project\C#\MovieEdit\prototype\kuro1215\WPFShowWindow\obj\Debug\WPFShowWindow.pdb

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "TRXKaII1REaIti/jMkh1pp27i0SgY/HQFaKJ1y4nEBw1dQg5lFEnHz+PvCyVffIjtpRfYg48dbhLwO5+yAploQ==",
+  "success": true,
+  "projectFilePath": "D:\\Project\\C#\\MovieEdit\\prototype\\kuro1215\\WpfApp1\\WpfApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kuro1215\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

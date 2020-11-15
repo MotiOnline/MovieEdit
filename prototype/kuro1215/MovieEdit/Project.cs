@@ -8,15 +8,18 @@ namespace MovieEdit
 {
     public class Project
     {
+        public static Project OpeningProject { get; private set; }
         public Size OutputSize { get; private set; }
         public string ProjectPath { get; }
+        public string ProjectName { get; }
         public IReadOnlyList<string> ObjectsPath { get; }
         public Timeline Timeline { get; }
 
-        private Project(string path, Size size, Timeline timeline)
+        private Project(string path, string name, Size size, Timeline timeline)
         {
             OutputSize = size;
-            ProjectPath = path;
+            ProjectPath = Path.GetDirectoryName(path);
+            ProjectName = name;
             Timeline = timeline;
         }
 
@@ -25,13 +28,17 @@ namespace MovieEdit
             OutputSize = new Size(width, heigth);
         }
 
-        public Project Create(string path, Size size)
+        public static void Create(string path, string name, Size size)
         {
-            return new Project(path, size, new Timeline());
+            OpeningProject = new Project(path, name, size, new Timeline());
         }
 
         public static Project Load(string path)
         {
+            if(OpeningProject != null)
+            {
+                throw new System.Exception();
+            }
             return Load(path);
         }
 

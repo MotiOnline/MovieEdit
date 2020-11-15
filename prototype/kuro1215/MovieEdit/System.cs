@@ -16,10 +16,9 @@ namespace MovieEdit
         public static List<ExtentionBase> MovieExtentions { get => Extentions [FileType.Movie]; }
         public static List<ExtentionBase> PictureExtentions { get => Extentions [FileType.Picture]; }
         public static List<ExtentionBase> AudioExtentions { get => Extentions [FileType.Audio]; }
-        public static string AppLocation { get; } = Path.GetFullPath(@".\");
-        public static string JsonWatchPath { get; } = $@"{AppLocation}assets\watch";
+        public static string AppLocation { get; } = Path.GetFullPath(@"./");
+        public static string JsonWatchPath { get; } = $@"{AppLocation}assets/watch";
         public static string DataPath { get; } = $@"{AppLocation}data";
-        public static Project OpeningProject { get; }
         internal static bool ConsoleInfo { get; set; } = false;
 
         public static bool AddMovieExtention(string extention, string filetype = "")

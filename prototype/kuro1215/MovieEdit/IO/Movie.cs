@@ -11,10 +11,11 @@ namespace MovieEdit.IO
     public class Movie
     {
         public static void OutputMovie(string path, string extention, FourCC cc,
-            VideoCapture cap = null, Dictionary<FrameInfo, PrintEffectBase> effect = null)
+            VideoCapture cap, Dictionary<FrameInfo, PrintEffectBase> effect = null)
         {
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (extention == null) throw new ArgumentNullException(nameof(extention));
+            if (cap == null) throw new ArgumentNullException(nameof(cap));
 
             if (extention[0] != '.') extention = "." + extention;
             if (!path.EndsWith(extention, CurrentCulture)) path += extention;
@@ -27,9 +28,12 @@ namespace MovieEdit.IO
             {
                 frame = cap.RetrieveMat();
                 var f = (uint)cap.Get(PosFrames);
-                foreach (var eff in effect)
+                if (effect != null)
                 {
-                    if (eff.Key.Begin <= f && f <= eff.Key.End) frame = eff.Value.Processing(frame);
+                    foreach (var eff in effect)
+                    {
+                        if (eff.Key.Begin <= f && f <= eff.Key.End) frame = eff.Value.Processing(frame);
+                    }
                 }
                 vw.Write(frame);
                 Log.Progress("Outputing Movie", f / cap.Get(FrameCount) * 100);

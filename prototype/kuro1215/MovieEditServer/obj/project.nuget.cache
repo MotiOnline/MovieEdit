@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "gfgsQOcW2xfamsydEAeD4sQn0/rMXW0TPXuA8D67s72JdVdY/H2yO4sYptezMpGlR6o1JMp1BmyuJso2CPHt2g==",
+  "success": true,
+  "projectFilePath": "D:\\Project\\C#\\MovieEdit\\prototype\\kuro1215\\MovieEditServer\\MovieEditServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kuro1215\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\opencvsharp4\\4.4.0.20200725\\opencvsharp4.4.4.0.20200725.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\opencvsharp4.runtime.osx.10.15-x64\\4.4.0.20200725\\opencvsharp4.runtime.osx.10.15-x64.4.4.0.20200725.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\opencvsharp4.runtime.win\\4.4.0.20200725\\opencvsharp4.runtime.win.4.4.0.20200725.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\opencvsharp4.windows\\4.4.0.20200725\\opencvsharp4.windows.4.4.0.20200725.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
+    "C:\\Users\\kuro1215\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.1\\system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,8 +1,10 @@
 ﻿using MovieEdit.Effects;
 using MovieEdit.TL;
 using OpenCvSharp;
+using OpenCvSharp.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using static MovieEdit.Language;
@@ -24,6 +26,12 @@ namespace MovieEdit.IO
                 if (cmd[0] == "exit") break;
                 else if (cmd[0] == "load")
                 {
+                    if (cmd.Length == 1)
+                    {
+                        Log.Warn("Command incorrect.", "CommandInput");
+                        continue;
+                    }
+                    cmd[1] = cmd[1].Replace("\"", "", StringComparison.Ordinal);
                     if (!File.Exists(cmd[1]))
                     {
                         Log.Error("The file is not found.");
@@ -34,7 +42,7 @@ namespace MovieEdit.IO
                 }
                 else if (cmd[0] == "unload")
                 {
-                    cap.Dispose();
+                    if (cap != null) cap.Dispose();
                     Log.Info("Unloading completed.");
                 }
                 else if (cmd[0] == "effect")
@@ -52,6 +60,11 @@ namespace MovieEdit.IO
                 else if (cmd[0] == "cam")
                 {
                     if (cam == null) cam = new Camera();
+                    if (cmd.Length == 1)
+                    {
+                        Log.Warn("Command incorrect.", "CommandInput");
+                        continue;
+                    }
                     if (cmd[1] == "open") cam.Open();
                     else if (cmd[1] == "show" && !cam.IsShow) Task.Run(() => { cam.Show(); });
                     else if (cmd[1] == "close") cam.Close();
@@ -60,15 +73,15 @@ namespace MovieEdit.IO
                 }
                 else if (cmd[0] == "show")
                 {
-                    if(cap != null) Task.Run(() => { Show(cap); });
+                    if(cap != null) Show(cap); //Task.Run(() => { Show(cap); });
                 }
                 else
                 {
                     Log.Warn("Illegual command : " + cmd[0]);
                 }
             }
-            cap.Dispose();
-            cam.Dispose();
+            if (cap != null) cap.Dispose();
+            if (cam != null) cam.Dispose();
         }
 
         public static string Inline(string msg, bool cmd = false)
@@ -82,10 +95,12 @@ namespace MovieEdit.IO
         private static void Show(VideoCapture cap)
         {
             Mat frame;
+            OperatingSystem os = Environment.OSVersion;
             while (true)
             {
                 frame = cap.RetrieveMat();
                 if (frame.Empty()) break;
+
                 Cv2.ImShow("preview", frame);
                 int key = Cv2.WaitKey(33);
                 double frame_position = cap.Get(VideoCaptureProperties.PosFrames);
@@ -94,6 +109,17 @@ namespace MovieEdit.IO
                 else if (key == 'j') cap.Set(VideoCaptureProperties.PosFrames, frame_position - 20);
                 else if (key == 'k') cap.Set(VideoCaptureProperties.PosFrames, frame_position + 20);
                 else if (key == 0x1b) break;
+                /*
+                if (os.Platform == PlatformID.Win32NT)
+                {
+                    WpfApp1.Show window = new WpfApp1.Show(cap.FrameCount);
+                    if (!window.IsVisible) window.Show();
+                    window.SetImage(frame.ToBitmap(), cap.PosFrames);
+                }
+                else
+                {
+                    
+                }*/
             }
         }
     }
