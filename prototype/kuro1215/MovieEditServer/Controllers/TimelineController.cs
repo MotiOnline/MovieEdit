@@ -15,11 +15,10 @@ namespace MovieEditServer.Controllers
     [ApiController]
     public class TimelineController : ControllerBase
     {
-        // PUT: api/TodoItems/5
         [HttpPut]
         public async Task<IActionResult> PutComponent(EditJson json)
         {
-            OpenCvSharp.VideoCapture cap = new OpenCvSharp.VideoCapture(@"D:\Movie\piano.mp4");
+            OpenCvSharp.VideoCapture cap = new OpenCvSharp.VideoCapture();
             Dictionary<FrameInfo, PrintEffectBase> effect = new();
             //var tl = Project.OpeningProject.Timeline;
             foreach (var c in json.Components)

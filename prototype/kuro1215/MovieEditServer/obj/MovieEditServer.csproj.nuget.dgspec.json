@@ -130,6 +130,10 @@
             "OpenCvSharp4.runtime.win": {
               "target": "Package",
               "version": "[4.4.0.20200725, )"
+            },
+            "Xabe.FFmpeg": {
+              "target": "Package",
+              "version": "[4.3.1, )"
             }
           },
           "imports": [

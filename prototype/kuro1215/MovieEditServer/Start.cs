@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MovieEditServer
 {
-    public class ServerStart
+    public class Start
     {
-        public static void Main(string[] args)
+        public static void ServerStart(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }

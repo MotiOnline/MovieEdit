@@ -10,7 +10,7 @@ namespace MovieEdit
     {
         private static FileWatcher watcher;
 
-        public static void Main(string[] args)
+        public static void ProgramStart(string[] args)
         {
             if (args == null) args = Array.Empty<string>();
             Starting(args);
